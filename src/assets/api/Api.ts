@@ -1,26 +1,17 @@
-export function GetUsersList () {
+export async function GetUsersList (){
 
-  // https://jsonplaceholder.typicode.com/users
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/users");
 
+    if(!response.ok){
+      throw new Error('Network response was not ok.');
+    }
 
-  // return "hello";
+    const data = await response.json();
+    return data;
 
-  // fetch("flowers.jpg")
-  // .then(function (response) {
-  //   if (response.ok) {
-  //     response.blob().then(function (myBlob) {
-  //       var objectURL = URL.createObjectURL(myBlob);
-  //       myImage.src = objectURL;
-  //     });
-  //   } else {
-  //     console.log("Network response was not ok.");
-  //   }
-  // })
-  // .catch(function (error) {
-  //   console.log(
-  //     "There has been a problem with your fetch operation: " + error.message,
-  //   );
-  // });
+  } catch (error) {
+    console.log(error);
+  }
 
-  return "hello";
 }
