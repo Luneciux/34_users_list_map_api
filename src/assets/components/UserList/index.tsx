@@ -12,8 +12,8 @@ interface UserListProps {
   
   return (
     <>
-      {users.map((user) => (
-        <User user={user} />
+      {users.map((user, i) => (
+        <User user={user} key={i}/>
       ))}
     </>
   );

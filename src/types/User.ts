@@ -7,9 +7,11 @@ export interface UserType {
     suite: string,
     city: string,
     zipcode: string,
-    geo: {
-      lat: string,
-      lng: string
-    }
+    geo: GeoType
   }
+}
+
+export interface GeoType {
+  lat: string, 
+  lng: string,
 }
