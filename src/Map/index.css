@@ -1,0 +1,18 @@
+.ol-control {
+  position: absolute;
+  background-color: #ffffff66;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.ol-full-screen {
+  top: .5em;
+  right: .5em;
+}
+
+.main-div {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: -4;
+}
