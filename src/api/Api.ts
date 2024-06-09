@@ -8,6 +8,7 @@ export async function GetUsersList (){
     }
 
     const data = await response.json();
+    
     if(data)
       return data;
     

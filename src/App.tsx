@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import { GetUsersList } from "./assets/api/Api";
-import { UserList } from "./assets/components/UserList";
+import { GetUsersList } from "./api/Api";
+import { UserList } from "./components/UserList";
 import { GeoType, UserType } from "./types/User";
-import { Map } from "./assets/components/Map";
-import { UserForm } from "./assets/components/UserForm";
+import { Map } from "./components/Map";
+import { UserForm } from "./components/UserForm";
 
 function App() {
   
@@ -14,26 +14,30 @@ function App() {
     const data: UserType[] = await GetUsersList();
     setUsers((prevUsers) => {
       prevUsers = [...data];
-
-      console.log(locals, users);
-
       return prevUsers;
     });
+    
+    return data;
 
   }
 
   useEffect(() => {
-    if(users.length !== 0){
-      fetchData();
-      setLocals((prevLocals) => {
-        if(prevLocals.length === 0)
-          users.map((user) => {
+    if(users.length === 0){
+      fetchData().then((data) => {
+
+        setLocals((prevLocals) => {
+          console.log("data: " + data);
+
+          data.map((user) => {
             const { geo } = user.address;
             prevLocals = [ ...prevLocals, geo];
           });
-        
-        return prevLocals;
+          
+          return prevLocals;
+        });
       });
+
+
     }
   }, []);
 
@@ -43,7 +47,7 @@ function App() {
       {locals.length}
       <Map />
       <UserList users={users}/>
-      <UserForm setUsers={setUsers}/>
+      {/* <UserForm setUsers={setUsers}/> */}
       {locals.map((local, i) => (
         <h1 key={i}>{local.lat}</h1>
       ))}

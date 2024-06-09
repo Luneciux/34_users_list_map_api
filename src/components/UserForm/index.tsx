@@ -1,5 +1,5 @@
 import React from "react";
-import { UserType } from "../../../types/User";
+import { UserType } from "../../types/User";
 
 
 export function UserForm() {
