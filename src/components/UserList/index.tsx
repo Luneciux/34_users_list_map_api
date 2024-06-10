@@ -11,10 +11,10 @@ interface UserListProps {
     return null
   
   return (
-    <>
+    <div className="content">
       {users.map((user, i) => (
         <User user={user} key={i}/>
       ))}
-    </>
+    </div>
   );
 }

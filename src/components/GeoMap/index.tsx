@@ -1,117 +1,79 @@
-import { useMemo, useState } from "react";
-import { Style, Fill, Stroke } from "ol/style";
-import { Geolocation, View } from "ol";
-import { osm, Vector } from "../../Map/Source";
-import { Coordinate } from "ol/coordinate";
-import { Layers, TileLayer, VectorLayer } from "../../Map/Layers";
-import { Controls } from "../../Map";
-import { Map } from "../../Map/Map";
-import { FullScreenControl } from "../../Map/Controls/FullScreenControl";
+import {Feature, Map, View} from 'ol';
+import {OSM, Vector as VectorSource} from 'ol/source';
+import {Point} from 'ol/geom';
+import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
+import {useGeographic} from 'ol/proj';
+import { useContext, useEffect, useRef } from 'react';
+import { LocalsContext } from '../../App';
+
+import './index.css';
 
 
-import CircleStyle from "ol/style/Circle";
-import Feature from "ol/Feature";
-import Point from "ol/geom/Point";
+export function GeoMap() {
+  
+  useGeographic();
+  
+  const { locals } = useContext(LocalsContext); 
 
-export function GeoMap () {
+  const loaded = useRef(false);
 
-  const [zoom] = useState(1);
-
-  const view = useMemo(
-    () =>
-      new View({
-        center: [0, 0],
-        zoom,
-      }),
-    [zoom]
-  );
-
-  const geolocation = new Geolocation({
-    trackingOptions: {
-      enableHighAccuracy: true,
-    },
-    projection: view.getProjection(),
-  });
-
-  geolocation.on("change:position", () => {
-    console.log("minha posição", geolocation.getPosition());
-  });
-
-  const accuracyFeature = useMemo(() => new Feature(), []);
-
-  geolocation.on("change:accuracyGeometry", () => {
-    const accuracyGeometry = geolocation.getAccuracyGeometry();
-    accuracyGeometry && accuracyFeature.setGeometry(accuracyGeometry);
-  });
-
-  const positionFeature = useMemo(() => new Feature(), []);
-
-  positionFeature.setStyle(
-    new Style({
-      image: new CircleStyle({
-        radius: 6,
-        fill: new Fill({
-          color: "#33cc4c",
+  
+  
+  useEffect(() => {
+    
+    const features: Feature<Point>[] = [];
+    
+    locals.map((local) => {
+      features.push(new Feature( new Point([ parseFloat(local.lng), parseFloat(local.lat) ]) ));
+    });
+      
+      
+    if(locals.length > 0 && features.length > 0) {
+      new Map({
+        target: 'map',
+    
+        view: new View({
+          center: [0, 0],
+          zoom: 0,
         }),
-        stroke: new Stroke({
-          color: "#fff",
-          width: 2,
-        }),
-      }),
-    })
-  );
-
-  const flyTo = (location: Coordinate, callBackDone?: () => void) => {
-    if (geolocation.getTracking()) {
-      view.animate(
-        {
-          center: location,
-          duration: 2500,
-          zoom: zoom + 12,
-        },
-        () => {
-          callBackDone && callBackDone();
-        }
-      );
-      geolocation.setTracking(false);
-    }
-  };
-
-  geolocation.on("change:position", () => {
-    const coordinates = geolocation.getPosition();
-    coordinates && positionFeature.setGeometry(new Point(coordinates));
-
-    coordinates &&
-      flyTo(coordinates, () => {
-        alert("chegamos ao destino");
+    
+        layers: [
+    
+          new TileLayer({
+            source: new OSM(),
+          }),
+    
+          new VectorLayer({
+            source: new VectorSource({
+              features: features,
+            }),
+            style: {
+              'circle-radius': 9,
+              'circle-fill-color': '#000',
+            },
+          }),
+        ],
+    
       });
-  });
+
+    }
+
+
+
+    
+
+  }, [locals, loaded]);
+
+
+
+
+
 
   return (
-    <>
-      <Map center={[0, 0]} zoom={zoom} view={view}>
-        <Layers>
-          <TileLayer source={osm()} zIndex={0} />
-          <VectorLayer
-            source={Vector({
-              features: [accuracyFeature, positionFeature],
-            })}
-          />
-        </Layers>
-        <Controls>
-          <FullScreenControl />
-        </Controls>
-      </Map>
+    <div>
 
-      <div>
-        <button
-          onClick={() => {
-            geolocation.setTracking(true);
-          }}
-        >
-          Pegar minha localização
-        </button>
-      </div>
-    </>
+      <div id='map' className='map'/>
+    </div>
   );
+
 }

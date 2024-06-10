@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { SetStateAction, createContext, useEffect, useRef, useState } from "react"
 import { GetUsersList } from "./api/Api";
 import { UserList } from "./components/UserList";
 import { GeoType, UserType } from "./types/User";
@@ -6,10 +6,18 @@ import { GeoType, UserType } from "./types/User";
 import "./App.css";
 import { GeoMap } from "./components/GeoMap";
 
+interface LocalsContextType {
+  locals: GeoType[],
+  setLocals: React.Dispatch<SetStateAction<GeoType[]>>
+}
+
+export const LocalsContext = createContext< LocalsContextType >({ locals: [], setLocals: () => {} });
+
 function App() {
   
   const [ users, setUsers ] = useState<UserType[]>([]);
   const [ locals, setLocals ] = useState<GeoType[]>([]);
+
   const loaded = useRef(false);
 
   const fetchData = async () => { 
@@ -49,12 +57,14 @@ function App() {
 
   return (
     <>
-      <GeoMap />
+      { 
+        loaded && 
+        <LocalsContext.Provider value={{ locals, setLocals }}>
+          <GeoMap/>
+        </LocalsContext.Provider>
+      }
       <UserList users={users} />
       {/* <UserForm setUsers={setUsers}/> */}
-      {locals.map((local, i) => (
-        <h1 key={i}>{local.lat}</h1>
-      ))}
     </>
   )
 }
