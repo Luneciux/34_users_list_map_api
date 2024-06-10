@@ -1,6 +1,28 @@
-.content{
+#container{
+  position: absolute;
+  top: 60%;
+  left: 78%;
   display: flex;
-  width: fit-content;
-  height: fit-content;
-  position: fixed;
+  flex-direction: column;
+  width: 20%;
+  height: 300px;
+  overflow-y: auto;
+  overflow-wrap: normal;
+  text-wrap: nowrap;
+  z-index: 10;
+}
+
+#container::-webkit-scrollbar {
+  width: 12px;
+}
+
+#container::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: #95a5a6;
+  border: 1px solid #cacaca;
+}
+
+#container::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: #2c3e50;
 }

@@ -11,7 +11,13 @@ interface LocalsContextType {
   setLocals: React.Dispatch<SetStateAction<GeoType[]>>
 }
 
+interface UsersContextType {
+  users: UserType[],
+  setUsers: React.Dispatch<SetStateAction<UserType[]>>
+}
+
 export const LocalsContext = createContext< LocalsContextType >({ locals: [], setLocals: () => {} });
+export const UsersContext = createContext< UsersContextType >({ users: [], setUsers: () => {} });
 
 function App() {
   
@@ -63,8 +69,9 @@ function App() {
           <GeoMap/>
         </LocalsContext.Provider>
       }
-      <UserList users={users} />
-      {/* <UserForm setUsers={setUsers}/> */}
+      <UsersContext.Provider value={{ users, setUsers }}>
+        <UserList users={users} /> 
+      </UsersContext.Provider>      
     </>
   )
 }

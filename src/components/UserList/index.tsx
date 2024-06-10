@@ -1,6 +1,8 @@
 import { UserType } from "../../types/User";
 import { User } from "../User";
 
+import "./index.css"
+
 interface UserListProps {
   users?: UserType[]
 }
@@ -11,10 +13,13 @@ interface UserListProps {
     return null
   
   return (
-    <div className="content">
-      {users.map((user, i) => (
-        <User user={user} key={i}/>
-      ))}
+    <div id="container">
+      <div className="content">
+        {users.map((user, i) => (
+          <User user={user} key={i}/>
+        ))}
+      </div>
+
     </div>
   );
 }

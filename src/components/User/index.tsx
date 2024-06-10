@@ -5,10 +5,15 @@ interface UserListProps {
 }
 
 export function User({ user } : UserListProps) {
+  //id, name, email, address.city, address.geo
   if(!user)
     return null
 
   return (
-    <h1>{user.name}</h1>
+    <div className="container">
+      <p>{user.name}</p>
+      <p>{user.email}</p>
+      <p>{`lat: ${user.address.geo.lat} lng: ${user.address.geo.lng}`}</p>
+    </div>
   );
 }
