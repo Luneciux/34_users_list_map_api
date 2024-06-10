@@ -1,4 +1,5 @@
 import { UserType } from "../../types/User";
+import "./index.css";
 
 interface UserListProps {
   user?: UserType
@@ -11,9 +12,14 @@ export function User({ user } : UserListProps) {
 
   return (
     <div className="container">
-      <p>{user.name}</p>
-      <p>{user.email}</p>
-      <p>{`lat: ${user.address.geo.lat} lng: ${user.address.geo.lng}`}</p>
+      <div className="content">
+        <p>{user.name}</p>
+        <div className="info">
+          <p>{user.email}</p>
+          <p>{`lat: ${user.address.geo.lat}`}</p>
+          <p>{`lng: ${user.address.geo.lat}`}</p>
+        </div>
+      </div>
     </div>
   );
 }

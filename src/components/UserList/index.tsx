@@ -1,13 +1,12 @@
-import { UserType } from "../../types/User";
+import { useContext } from "react";
 import { User } from "../User";
 
 import "./index.css"
+import { UsersContext } from "../../App";
 
-interface UserListProps {
-  users?: UserType[]
-}
+export function UserList() {
 
-  export function UserList({ users } : UserListProps) {
+  const { users } = useContext(UsersContext);
 
   if(!users)
     return null

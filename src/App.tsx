@@ -70,7 +70,7 @@ function App() {
         </LocalsContext.Provider>
       }
       <UsersContext.Provider value={{ users, setUsers }}>
-        <UserList users={users} /> 
+        <UserList /> 
       </UsersContext.Provider>      
     </>
   )
