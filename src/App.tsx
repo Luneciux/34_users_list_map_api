@@ -2,9 +2,9 @@ import { SetStateAction, createContext, useEffect, useRef, useState } from "reac
 import { GetUsersList } from "./api/Api";
 import { UserList } from "./components/UserList";
 import { GeoType, UserType } from "./types/User";
+import { GeoMap } from "./components/GeoMap";
 
 import "./App.css";
-import { GeoMap } from "./components/GeoMap";
 
 interface LocalsContextType {
   locals: GeoType[],

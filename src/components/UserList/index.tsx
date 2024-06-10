@@ -3,6 +3,7 @@ import { User } from "../User";
 
 import "./index.css"
 import { UsersContext } from "../../App";
+import { UserForm } from "../UserForm";
 
 export function UserList() {
 
@@ -13,12 +14,15 @@ export function UserList() {
   
   return (
     <div id="container">
-      <div className="content">
-        {users.map((user, i) => (
-          <User user={user} key={i}/>
-        ))}
-      </div>
+      <UserForm />
+      <div id="container-users">
+        <div className="content">
+          {users.map((user, i) => (
+            <User user={user} key={i}/>
+          ))}
+        </div>
 
+      </div>
     </div>
   );
 }
