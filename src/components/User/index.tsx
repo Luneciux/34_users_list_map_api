@@ -17,7 +17,7 @@ export function User({ user } : UserListProps) {
         <div className="info">
           <p>{user.email}</p>
           <p>{`lat: ${user.address.geo.lat}`}</p>
-          <p>{`lng: ${user.address.geo.lat}`}</p>
+          <p>{`lng: ${user.address.geo.lng}`}</p>
         </div>
       </div>
     </div>

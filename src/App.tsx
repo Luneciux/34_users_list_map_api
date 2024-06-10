@@ -16,13 +16,35 @@ interface UsersContextType {
   setUsers: React.Dispatch<SetStateAction<UserType[]>>
 }
 
+interface UserContextType {
+  setNewUser: React.Dispatch<SetStateAction<UserType>>
+}
+
 export const LocalsContext = createContext< LocalsContextType >({ locals: [], setLocals: () => {} });
 export const UsersContext = createContext< UsersContextType >({ users: [], setUsers: () => {} });
+export const UserContext = createContext< UserContextType >({ setNewUser: () => {} });
 
 function App() {
   
   const [ users, setUsers ] = useState<UserType[]>([]);
   const [ locals, setLocals ] = useState<GeoType[]>([]);
+  const [ newUser, setNewUser ] = useState<UserType>({
+    id: 0, 
+    name: "", 
+    email: "", 
+    address: {
+      street: "",
+      suite: "",
+      city: "",
+      zipcode: "",
+      geo: {
+        lat: "",
+        lng: ""
+      }
+    }
+  });
+
+  const usersLength = useRef(0);
 
   const loaded = useRef(false);
 
@@ -56,10 +78,23 @@ function App() {
         }
 
       });
-
-
     }
   }, []);
+
+
+  useEffect(() => {
+    if(users.length > usersLength.current){
+
+      setUsers(prevUsers => [ ...prevUsers, newUser]);
+
+      setLocals((prevLocals) => {        
+        usersLength.current = users.length;
+        console.log(newUser);
+        return [ ...prevLocals, newUser.address.geo];
+      });
+      
+    }
+  }, [newUser]);
 
   return (
     <>
@@ -67,11 +102,13 @@ function App() {
         loaded && 
         <LocalsContext.Provider value={{ locals, setLocals }}>
           <GeoMap/>
+          <UsersContext.Provider value={{ users, setUsers }}>
+            <UserContext.Provider value={{ setNewUser }}>
+              <UserList />  
+            </UserContext.Provider>
+          </UsersContext.Provider>  
         </LocalsContext.Provider>
-      }
-      <UsersContext.Provider value={{ users, setUsers }}>
-        <UserList /> 
-      </UsersContext.Provider>      
+      }        
     </>
   )
 }
