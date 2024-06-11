@@ -47,9 +47,11 @@ export function UserForm() {
     <div className="form">
       <input type="text" placeholder="Nome" value={name} onChange={handleName}/>
       <input type="email" placeholder="Email" value={email} onChange={handleEmail}/>
-      <input type="text" placeholder="Latitude" value={lat} onChange={handleLat}/>
-      <input type="text" placeholder="Longitude" value={lng} onChange={handleLng}/>
-      <button onClick={handleSubmit}>Adicionar</button>
+      <div className="lat-lng-inputs">
+        <input type="text" placeholder="Latitude" value={lat} onChange={handleLat}/>
+        <input type="text" placeholder="Longitude" value={lng} onChange={handleLng}/>
+      </div>
+      <button onClick={handleSubmit}>Criar</button>
     </div>
   );
 }

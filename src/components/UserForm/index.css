@@ -1,4 +1,50 @@
 .form{
   display: flex;
   flex-direction: column;
+  padding: 0px 0px 15px 0px;
+}
+
+.lat-lng-inputs input{
+  max-width: 49%;
+}
+
+.lat-lng-inputs{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; 
+}
+
+.form input{
+  margin: 0px 0px 5px 0px;
+  font-family: GeneralSans;
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+  background-color: #ffffff;
+}
+
+.form input::after{
+  border: none;
+}
+
+.form input:focus{
+  border: none;
+  outline: none;
+}
+
+.form input:focus::placeholder{
+  color: #3766bd;
+  transition: 0.3s;
+}
+
+.form button {
+  font-family: GeneralSans;
+  background-color: #3766bd;
+  border: none;
+  margin-top: 5px;
+  padding: 8px 5px 8px 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #ffffff;
+  font-weight: 600;
 }

@@ -13,11 +13,15 @@ export function User({ user } : UserListProps) {
   return (
     <div className="container">
       <div className="content">
-        <p>{user.name}</p>
         <div className="info">
-          <p>{user.email}</p>
-          <p>{`lat: ${user.address.geo.lat}`}</p>
-          <p>{`lng: ${user.address.geo.lng}`}</p>
+          <div className="name-email">
+            <p className="name">{`${user.name}`}</p>
+            <p>{`${user.email}`}</p>
+          </div>
+          <div className="adress-geo">
+            <p className="coordinate"><span className="coordinate-label">lat:</span>{`${user.address.geo.lat}`}</p>
+            <p className="coordinate"><span className="coordinate-label">lng:</span>{`${user.address.geo.lng}`}</p>
+          </div>
         </div>
       </div>
     </div>

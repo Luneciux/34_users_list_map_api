@@ -1,7 +1,7 @@
 #container{
   position: absolute;
-  top: 45%;
-  left: 78%;
+  top: 40%;
+  left: 80%;
   display: flex;
   flex-direction: column;
   width: 20%;
@@ -10,6 +10,9 @@
   overflow-wrap: normal;
   text-wrap: nowrap;
   z-index: 10;
+  padding: 20px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 5px;
 }
 
 #container-users{
@@ -29,7 +32,7 @@
 
 #container-users::-webkit-scrollbar-track {
   border-radius: 8px;
-  background-color: #95a5a6;
+  background-color: #f1f1f1;
   border: 1px solid #cacaca;
 }
 
